@@ -1,3 +1,3 @@
 class Graduate < ActiveRecord::Base
-  belongs_to :cohort
+  belongs_to :cohort, foreign_key: "dbc_id"
 end
