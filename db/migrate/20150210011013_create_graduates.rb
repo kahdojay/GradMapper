@@ -9,6 +9,10 @@ class CreateGraduates < ActiveRecord::Migration
       t.string  :facebook
       t.string  :linked_in
       t.integer :dbc_id
+      t.string  :location
+      t.string  :company
+      t.string  :lat
+      t.string  :long
     end
   end
 end
