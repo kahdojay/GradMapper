@@ -1,4 +1,8 @@
 class MapController < ApplicationController
+  def index
+    @cohorts = Cohort.all
+  end
+
   def graduates
     @graduates = Graduate.all
     if request.xhr?
