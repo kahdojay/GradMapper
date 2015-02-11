@@ -1,4 +1,4 @@
-function initialize() {
+function initializeMap() {
   var startLatlng = new google.maps.LatLng(40.7048872,-74.0123737);
   var mapOptions = {
     zoom: 3,
@@ -8,7 +8,7 @@ function initialize() {
 }
 
 $(document).ready(function(){
-  initialize();
+  initializeMap();
   $.ajax({
     type: "GET",
     url: "/graduates"
