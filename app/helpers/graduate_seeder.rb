@@ -1,7 +1,7 @@
 module GraduateSeeder
   def self.seed(graduates)
     graduates.each do |g|
-      p Graduate.create!(
+      Graduate.create!(
         name: g.name,
         email: g.email,
         github: g.profile[:github],
