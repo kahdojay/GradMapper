@@ -16,14 +16,14 @@ $(document).ready(function(){
     var infoBoxes = []
 
     response.forEach(function(graduate) {
-      var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.latitude)), (parseFloat(graduate.longitude)))
+      var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
 
       var marker = new google.maps.Marker({
         position: latitude_longitude,
         map: window.map
       });
 
-      var contentString = "<p>" + graduate.name + "</p><p>" + graduate.current_location + "</p><p>" + graduate.current_employer + "</p>" + "<a href=" + graduate.linkedin_url + ">LinkedIn</a></p>"
+      var contentString = "<p>" + graduate.name + "</p><p>" + graduate.location + "</p><p>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn</a></p>"
 
       var infoWindow = new google.maps.InfoWindow({
           content: contentString
