@@ -7,13 +7,11 @@
   <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuxOKovG-8ueM3rJvF4Lt1K6mXPN78HLE">
   </script>
-  <script src="http://listjs.com/no-cdn/list.js"></script>
-  <script src="http://listjs.com/no-cdn/list.fuzzysearch.js"></script>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </head>
 <body>
   <div id="wrapper">
     <%= yield %>
   </div>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
