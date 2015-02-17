@@ -1,0 +1,10 @@
+<h1 class="title">Dev Bootprint</h1>
+<div id="map-container">
+  <div id="map-canvas"></div>
+</div>
+<div>
+  <h2>Search Cohorts</h2>
+  <%= form_tag do %>
+    <%= text_field_tag "search", nil, placeholder:"Search", autocomplete: :off %>
+  <% end %>
+</div>
