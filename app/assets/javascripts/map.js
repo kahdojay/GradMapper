@@ -14,7 +14,8 @@ var initializeSoulmate = function() {
   var select = function(term, data, type) {
     $("#search").val(term);
     $("ul#soulmate").hide();
-    return window.location.href = data.link
+    clearMarkers();
+    populateMarkers($(event.target).text())
   }
   $("#search").soulmate({
     url: "/autocomplete/search",
@@ -31,7 +32,9 @@ var populateMarkers = function(cohortName) {
   $.ajax({
     type: "GET",
     url: "/graduates",
+    data: {cohort: cohortName}
   }).done(function(response) {
+    markersArray = [];
     var infoBoxes = []
     response.forEach(function(graduate) {
       var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
@@ -43,6 +46,7 @@ var populateMarkers = function(cohortName) {
       var infoWindow = new google.maps.InfoWindow({
           content: contentString
       });
+      markersArray.push(marker)
       infoBoxes.push(infoWindow)
       google.maps.event.addListener(marker, 'click', function() {
         infoBoxes.forEach(function(infoBox) { infoBox.close() })
@@ -50,6 +54,13 @@ var populateMarkers = function(cohortName) {
       });
     })
   })
+}
+
+var clearMarkers = function() {
+  for (var i =0; i < markersArray.length; i++) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
 }
 
 $(document).ready(function(){
