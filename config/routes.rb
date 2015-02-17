@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
-  get '/', to: 'map#index'
-  get '/graduates', to: 'map#graduates'
+  mount Soulmate::Server, at: '/autocomplete'
+  get '/', to: 'welcome#index'
+  get '/graduates', to: 'welcome#graduates'
+  resources :cohorts
+  resources :graduates
 end
