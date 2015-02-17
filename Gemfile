@@ -47,3 +47,5 @@ end
 gem 'dbc-ruby'
 gem 'linkedin-scraper'
 gem 'geocoder'
+gem 'rack-contrib'
+gem 'soulmate', require: 'soulmate/server'
