@@ -13,6 +13,7 @@ class CreateGraduates < ActiveRecord::Migration
       t.string  :company
       t.string  :lat
       t.string  :long
+      t.string  :img_url
     end
   end
 end

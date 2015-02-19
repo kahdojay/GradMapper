@@ -1,5 +1,8 @@
 body {
-  background-color: #F37A5A;
+  color: #2e3b4e;
+  margin: 0;
+  background: #f8f8f8;
+  /*background-size: 100vw 100vh;*/
 }
 
 .logo {
@@ -7,11 +10,23 @@ body {
 }
 
 .title {
-  font-size: 3em;
-  color: #F2F2F2;
+  font-size: 3rem;
+  color: #EA4A3C;
   text-align: center;
-  font-family: 'Allerta';
+  font-family: 'Open Sans';
   text-shadow: 1.5px 1.5px black;
+  padding: 0;
+  margin: 1rem;
+}
+
+.panel-title {
+  font-size: 2rem;
+  color: #2e3b4e;
+  text-align: center;
+  font-family: 'Open Sans';
+  text-shadow: .5px .5px black;
+  padding: 0;
+  margin: 1rem;
 }
 
 #map-canvas {
@@ -22,29 +37,28 @@ body {
 
 #map-container {
   width: 40%;
-  height: 400px;
+  height: 40rem;
   border-radius: 16px 16px;
   border-color: #fff;
   border-style: solid;
   box-shadow: 2px 2px 10px #B1B1B1;
   border-width: 7px;
-  max-width: 90%;
+  width: 50%;
   margin: auto;
   min-height: 75%;
-}
-
-#wrapper {
-  text-align: center;
+  display: inline-block;
 }
 
 #cohort-search {
   text-align: center;
 }
 
-.container {
-  width: 500px;
+.grad-container {
+  float:right;
+  display: inline-block;
+  min-width: 45%;
+  max-width: 50%;
   margin: 0 auto;
-  padding: 100px;
   text-align: center;
 }
 
@@ -55,4 +69,12 @@ body {
 
 li.soulmate-suggestion{
   text-align: left;
+}
+
+header {
+  padding: 0;
+  overflow: auto;
+  background: #333333;
+  width: 100%;
+  margin-bottom: 1rem;
 }
