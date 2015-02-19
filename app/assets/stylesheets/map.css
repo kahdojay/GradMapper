@@ -53,7 +53,7 @@ body {
   text-align: center;
 }
 
-.grad-container {
+.search-container {
   float:right;
   display: inline-block;
   min-width: 45%;
@@ -72,9 +72,13 @@ li.soulmate-suggestion{
 }
 
 header {
-  padding: 0;
+  padding-top: 1rem;
   overflow: auto;
   background: #333333;
   width: 100%;
   margin-bottom: 1rem;
+}
+
+#grad-bar {
+  min-height: 7rem;
 }
