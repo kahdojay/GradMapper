@@ -1,3 +1,5 @@
+var markersArray = [];
+
 var initializeMap = function() {
   var startLatlng = new google.maps.LatLng(40.7048872,-74.0123737);
   var mapOptions = {
@@ -12,11 +14,16 @@ var initializeSoulmate = function() {
     return term;
   }
   var select = function(term, data, type) {
+    $("#search").text(term);
     $("#search").val(term);
     $("ul#soulmate").hide();
     clearMarkers();
     populateMarkers($(event.target).text())
   }
+  var checkForEmptySearch = function() {
+    if ($("#search").val() === "") { populateMarkers() }
+  }
+
   $("#search").soulmate({
     url: "/autocomplete/search",
     types: ["cohorts"],
@@ -25,7 +32,15 @@ var initializeSoulmate = function() {
     minQueryLength: 2,
     maxResults: 5
   })
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+  $(window).keyup(function(event){ checkForEmptySearch() });
 }
+
 
 
 var populateMarkers = function(cohortName) {
@@ -34,7 +49,6 @@ var populateMarkers = function(cohortName) {
     url: "/graduates",
     data: {cohort: cohortName}
   }).done(function(response) {
-    markersArray = [];
     var infoBoxes = []
     response.forEach(function(graduate) {
       var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
@@ -57,7 +71,7 @@ var populateMarkers = function(cohortName) {
 }
 
 var clearMarkers = function() {
-  for (var i =0; i < markersArray.length; i++) {
+  for (var i=0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
   }
   markersArray.length = 0;
