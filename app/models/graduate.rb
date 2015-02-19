@@ -24,6 +24,10 @@ class Graduate < ActiveRecord::Base
 
   def get_linkedin_profile(link)
     profile = Linkedin::Profile.get_profile(link)
+    if profile && profile.picture
+      update(img_url: profile.picture)
+    end
+
     if profile && profile.location && profile.current_companies[0]
       p "Seeding #{profile.name}'s location and company"
       update(location: profile.location, company: profile.current_companies[0][:company])
