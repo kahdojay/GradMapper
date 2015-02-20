@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery.soulmate
+//= require jquery.slick
 //= require turbolinks
 //= require_tree .
