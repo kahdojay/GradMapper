@@ -80,5 +80,24 @@ header {
 }
 
 #grad-bar {
-  min-height: 7rem;
+  height: 10rem;
+  overflow: hidden;
+}
+
+.grad-container {
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+}
+
+.grad-pic {
+  max-height: 80%;
+  max-width: 40%;
+  margin-right: 5%;
+}
+
+.grad-content {
+  max-height: 80%;
+  max-width: 40%;
+  margin-left: 5%;
 }
