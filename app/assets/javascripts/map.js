@@ -1,4 +1,5 @@
 var markersArray = [];
+var infoBoxes = [];
 
 var initializeMap = function() {
   var startLatlng = new google.maps.LatLng(40.7048872,-74.0123737);
@@ -41,6 +42,16 @@ var initializeSoulmate = function() {
   $(window).keyup(function(event){ checkForEmptySearch() });
 }
 
+var initializeSlick = function() {
+  $('.carousel').slick({
+    infinite: true,
+    dots: false,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 10,
+    slidesToScroll: 5
+  });
+}
 
 
 var populateMarkers = function(cohortName) {
@@ -49,25 +60,40 @@ var populateMarkers = function(cohortName) {
     url: "/graduates",
     data: {cohort: cohortName}
   }).done(function(response) {
-    var infoBoxes = []
-    response.forEach(function(graduate) {
-      var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
-      var marker = new google.maps.Marker({
-        position: latitude_longitude,
-        map: window.map
-      });
-      var contentString = "<p>" + graduate.name + "</p><p>" + graduate.location + "</p><p>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn</a></p>"
-      var infoWindow = new google.maps.InfoWindow({
-          content: contentString
-      });
-      markersArray.push(marker)
-      infoBoxes.push(infoWindow)
-      google.maps.event.addListener(marker, 'click', function() {
-        infoBoxes.forEach(function(infoBox) { infoBox.close() })
-        infoWindow.open(window.map, marker);
-      });
-    })
+    populateGraduates(response)
   })
+}
+
+var populateGraduates = function(graduates) {
+  $('.carousel').slick('unslick');
+  $("#grad-bar").empty();
+
+  graduates.forEach(function(graduate) {
+    var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
+    var marker = new google.maps.Marker({
+      position: latitude_longitude,
+      map: window.map
+    })
+
+    var contentString = "<p>" + graduate.name + "</p><p>" + graduate.location + "</p><p>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn</a></p>"
+    var infoWindow = new google.maps.InfoWindow({
+        content: contentString
+    })
+
+    if (graduate.img_url) {
+      $("#grad-bar").append("<div class='panel'><img class='grad-pic'src=" + graduate.img_url + "><br><div class='grad-content'>" + graduate.name + "<br>" + graduate.company + "</div></div>");
+    }
+
+    markersArray.push(marker);
+    infoBoxes.push(infoWindow);
+    google.maps.event.addListener(marker, 'click', function() {
+      infoBoxes.forEach(function(infoBox) {
+        infoBox.close();
+      })
+      infoWindow.open(window.map, marker);
+    });
+  })
+  initializeSlick();
 }
 
 var clearMarkers = function() {
@@ -81,4 +107,5 @@ $(document).ready(function(){
   initializeMap();
   initializeSoulmate();
   populateMarkers();
+  initializeSlick();
 })
