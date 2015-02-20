@@ -2,7 +2,7 @@ class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
   after_save :load_into_soulmate
   before_destroy :remove_from_soulmate
-  after_create :scrape_linkedin
+  # after_create :scrape_linkedin
 
   private
 
@@ -31,7 +31,7 @@ class Graduate < ActiveRecord::Base
     if profile && profile.location && profile.current_companies[0]
       p "Seeding #{profile.name}'s location and company"
       update(location: profile.location, company: profile.current_companies[0][:company])
-      search = Geocoder.search("#{profile.location} #{profile.current_companies[0][:company]}")
+      search = Geocoder.search("#{profile.location} city #{profile.current_companies[0][:company]} company")
       if search[0]
         p "Seeding #{profile.name}'s coordinates"
         lat = search[0].latitude
