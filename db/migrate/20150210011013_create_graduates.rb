@@ -14,6 +14,7 @@ class CreateGraduates < ActiveRecord::Migration
       t.string  :lat
       t.string  :long
       t.string  :img_url
+      t.string  :cohort_name
     end
   end
 end
