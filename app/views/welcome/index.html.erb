@@ -1,11 +1,13 @@
-<div class="carousel" id="grad-bar">
-</div>
-<div id="map-container">
-  <div id="map-canvas"></div>
-</div>
 <div class="search-container">
-  <h2 class="panel-title">Search Cohorts</h2>
   <%= form_tag do %>
-    <%= text_field_tag "search", nil, placeholder: "Search", autocomplete: :off, class:"disabled-input" %>
+    <%= text_field_tag "search", nil, placeholder: "Search", autocomplete: :off %>
   <% end %>
 </div>
+<div id="map-container">
+  <div id="map-canvas">
+  </div>
+</div>
+<div class="buttons-container">
+</div>
+<div class="carousel" id="grad-container">
+</div>er
