@@ -52,6 +52,7 @@ GEM
       execjs
     coffee-script-source (1.9.0)
     columnize (0.9.0)
+    cowsay (0.2.0)
     dbc-ruby (1.0.4)
       rest-client
     debug_inspector (0.0.2)
@@ -207,6 +208,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  cowsay
   dbc-ruby
   dotenv-rails
   geocoder
