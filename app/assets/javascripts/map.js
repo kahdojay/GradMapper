@@ -5,6 +5,7 @@ var initializeMap = function() {
   var startLatlng = new google.maps.LatLng(40.7048872,-74.0123737);
   var mapOptions = {
     zoom: 3,
+    minZoom: 3,
     center: startLatlng
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -44,13 +45,18 @@ var initializeSoulmate = function() {
 
 var initializeSlick = function() {
   $('.carousel').slick({
+    vertical: true,
     infinite: true,
     dots: false,
+    prevArrow:"#up",
+    nextArrow:"#down",
     infinite: true,
     speed: 300,
-    slidesToShow: 10,
-    slidesToScroll: 5
+    slidesToShow: 4,
+    slidesToScroll: 3,
   });
+
+  $('.carousel').find('.grad-panel')
 }
 
 
@@ -66,34 +72,45 @@ var populateMarkers = function(cohortName) {
 
 var populateGraduates = function(graduates) {
   $('.carousel').slick('unslick');
-  $("#grad-bar").empty();
+  $("#grad-container").empty();
+
+  var indexCounter = 0
 
   graduates.forEach(function(graduate) {
+    indexCounter = indexCounter + 1
+
     var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
     var marker = new google.maps.Marker({
       position: latitude_longitude,
       map: window.map
     })
+    marker.indx = indexCounter
 
-    var contentString = "<p>" + graduate.name + "</p><p>" + graduate.location + "</p><p>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn</a></p>"
+    var contentString = "<div class='grad-panel' data-index=" + marker.indx + "><img class='grad-pic' src=" + graduate.img_url + "><div class='grad-content'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>"
     var infoWindow = new google.maps.InfoWindow({
-        content: contentString
+        content: contentString,
+        maxWidth: 140
     })
 
-    if (graduate.img_url) {
-      $("#grad-bar").append("<div class='panel'><img class='grad-pic'src=" + graduate.img_url + "><br><div class='grad-content'>" + graduate.name + "<br>" + graduate.company + "</div></div>");
-    }
+      $(".carousel").append("<div class='grad-panel' data-index=" + marker.indx + "><img class='grad-pic' src=" + graduate.img_url + "><div class='grad-content'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>");
+
 
     markersArray.push(marker);
     infoBoxes.push(infoWindow);
-    google.maps.event.addListener(marker, 'click', function() {
+    google.maps.event.addListener(marker, 'mouseover', function() {
       infoBoxes.forEach(function(infoBox) {
         infoBox.close();
       })
       infoWindow.open(window.map, marker);
     });
   })
+  $(".buttons-container").append('<p id="up">&#9650</p><p id="down">&#9660</p>')
   initializeSlick();
+}
+
+var slideToMarkerId = function(index) {
+  $(".carousel").slick('slickGoTo', index);
+  console.log("went to " + index)
 }
 
 var clearMarkers = function() {
@@ -106,6 +123,6 @@ var clearMarkers = function() {
 $(document).ready(function(){
   initializeMap();
   initializeSoulmate();
-  populateMarkers();
   initializeSlick();
+  populateMarkers();
 })
