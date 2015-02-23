@@ -2,7 +2,7 @@ class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
   after_save :load_into_soulmate
   before_destroy :remove_from_soulmate
-  # after_create :scrape_linkedin
+  after_create :scrape_linkedin
 
   private
 
