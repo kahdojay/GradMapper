@@ -15,3 +15,6 @@
 //= require turbolinks
 //= require jquery.slick
 //= require_tree .
+//= require jquery.slick
+//= require autocomplete-0.3.0
+//= require_tree .
