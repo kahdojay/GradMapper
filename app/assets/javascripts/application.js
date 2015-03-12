@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.soulmate
 //= require turbolinks
 //= require jquery.slick
 //= require_tree .
