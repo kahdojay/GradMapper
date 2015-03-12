@@ -11,37 +11,37 @@ var initializeMap = function() {
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
 
-var initializeSoulmate = function() {
-  var render = function(term, data, type) {
-    return term;
-  }
-  var select = function(term, data, type) {
-    $("#search").text(term);
-    $("#search").val(term);
-    $("ul#soulmate").hide();
-    clearMarkers();
-    populateMarkers($(event.target).text())
-  }
-  var checkForEmptySearch = function() {
-    if ($("#search").val() === "") { populateMarkers() }
-  }
+// var initializeSoulmate = function() {
+//   var render = function(term, data, type) {
+//     return term;
+//   }
+//   var select = function(term, data, type) {
+//     $("#search").text(term);
+//     $("#search").val(term);
+//     $("ul#soulmate").hide();
+//     clearMarkers();
+//     populateMarkers($(event.target).text())
+//   }
+//   var checkForEmptySearch = function() {
+//     if ($("#search").val() === "") { populateMarkers() }
+//   }
 
-  $("#search").soulmate({
-    url: "/autocomplete/search",
-    types: ["cohorts"],
-    renderCallback: render,
-    selectCallback: select,
-    minQueryLength: 2,
-    maxResults: 5
-  })
-  $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-  $(window).keyup(function(event){ checkForEmptySearch() });
-}
+//   $("#search").soulmate({
+//     url: "/autocomplete/search",
+//     types: ["cohorts"],
+//     renderCallback: render,
+//     selectCallback: select,
+//     minQueryLength: 2,
+//     maxResults: 5
+//   })
+//   $(window).keydown(function(event){
+//     if(event.keyCode == 13) {
+//       event.preventDefault();
+//       return false;
+//     }
+//   });
+//   $(window).keyup(function(event){ checkForEmptySearch() });
+// }
 
 var initializeSlick = function() {
   $('.carousel').slick({
@@ -122,7 +122,6 @@ var clearMarkers = function() {
 
 $(document).ready(function(){
   initializeMap();
-  initializeSoulmate();
   initializeSlick();
   populateMarkers();
   var fruits = ['Apple', 'Banana', 'Orange'];
