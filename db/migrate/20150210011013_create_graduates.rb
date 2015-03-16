@@ -1,20 +1,20 @@
 class CreateGraduates < ActiveRecord::Migration
   def change
     create_table :graduates do |t|
-      t.string  :name
-      t.string  :email
-      t.string  :github
-      t.string  :quora
-      t.string  :twitter
-      t.string  :facebook
-      t.string  :linked_in
-      t.integer :dbc_id
-      t.string  :location
-      t.string  :company
-      t.string  :lat
-      t.string  :long
-      t.string  :img_url
-      t.string  :cohort_name
+      t.string  :name, {default: "unknown"}
+      t.string  :email, {default: "unknown"}
+      t.string  :github, {default: "unknown"}
+      t.string  :quora, {default: "unknown"}
+      t.string  :twitter, {default: "unknown"}
+      t.string  :facebook, {default: "unknown"}
+      t.string  :linked_in, {default: "unknown"}
+      t.integer :dbc_id, {default: "unknown"}
+      t.string  :location, {default: "unknown"}
+      t.string  :company, {default: "company unknown"}
+      t.string  :lat, {default: "unknown"}
+      t.string  :long, {default: "unknown"}
+      t.string  :img_url, {default: "unknown"}
+      t.string  :cohort_name, {default: "unknown"}
     end
   end
 end
