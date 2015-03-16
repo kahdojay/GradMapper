@@ -1,20 +1,8 @@
 class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
-  # after_save :load_into_soulmate
-  # before_destroy :remove_from_soulmate
   after_create :scrape_linkedin
 
   private
-
-  # def load_into_soulmate
-  #   loader = Soulmate::Loader.new("graduates")
-  #   loader.add("term" => name, "id" => id, "data" => { "link" => Rails.application.routes.url_helpers.graduate_path(self) })
-  # end
-
-  # def remove_from_soulmate
-  #   loader = Soulmate::Loader.new("graduates")
-  #   loader.remove("id" => id)
-  # end
 
   def scrape_linkedin
     return "nil" if linked_in.nil?
@@ -40,13 +28,4 @@ class Graduate < ActiveRecord::Base
     search = Geocoder.search(search_string)
     update(lat: search[0].latitude, long: search[0].longitude) if search[0]
   end
-
-  # def update_grad(profile, coordinates)
-  #   self.update(
-  #     location: profile.location,
-  #     company: profile.current_companies[0][:company],
-  #     lat: coordinates['lat'],
-  #     long: coordinates['lng']
-  #     )
-  # end
 end
