@@ -17,36 +17,36 @@ class Graduate < ActiveRecord::Base
   # end
 
   def scrape_linkedin
-    return ("nil") if (linked_in.nil?)
-    return ("empty") if (linked_in.empty?)
-    get_linkedin_profile(linked_in) if (linked_in.include?("linkedin") || linked_in.include?("lnkd"))
+    return "nil" if linked_in.nil?
+    return "empty" if linked_in.empty?
+    get_li_details(linked_in) if (linked_in.include?("linkedin") || linked_in.include?("lnkd"))
   end
 
-  def get_linkedin_profile(link)
+  def get_li_details(link)
     profile = Linkedin::Profile.get_profile(link)
-    if profile && profile.picture
-      update(img_url: profile.picture)
+    if profile.nil? || !profile.location || !profile.current_companies
+      p "Bad linked-in call"
+      return "nil"
     end
-
-    if profile && profile.location && profile.current_companies[0]
-      p "Seeding #{profile.name}'s location and company"
-      update(location: profile.location, company: profile.current_companies[0][:company])
-      search = Geocoder.search("#{profile.location} city #{profile.current_companies[0][:company]} company")
-      if search[0]
-        p "Seeding #{profile.name}'s coordinates"
-        lat = search[0].latitude
-        lng = search[0].longitude
-        update(lat: lat, long: lng)
-      end
+    p "Seeding #{name}'s LinkedIn details"
+    profile.picture ? update(img_url: profile.picture) : update(img_url: "app/assets/images/devbootcamplogo.jpeg")
+    if profile.current_companies[0]
+      update(location: profile.current_companies[0][:address], company: profile.current_companies[0][:company])
+      search_string = location
+    else
+      update(location: profile.location, company: "company unknown")
+      search_string = "#{location} city"
     end
+    search = Geocoder.search(search_string)
+    update(lat: search[0].latitude, long: search[0].longitude) if search[0]
   end
 
-  def update_grad(profile, coordinates)
-    self.update(
-      location: profile.location,
-      company: profile.current_companies[0][:company],
-      lat: coordinates['lat'],
-      long: coordinates['lng']
-      )
-  end
+  # def update_grad(profile, coordinates)
+  #   self.update(
+  #     location: profile.location,
+  #     company: profile.current_companies[0][:company],
+  #     lat: coordinates['lat'],
+  #     long: coordinates['lng']
+  #     )
+  # end
 end
