@@ -47,7 +47,4 @@ end
 gem 'dbc-ruby'
 gem 'linkedin-scraper'
 gem 'geocoder'
-gem 'rack-contrib'
 gem 'google-webfonts-rails'
-gem 'seed_dump'
-gem 'jquery-slick-rails'
