@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require_tree .
- *= require soulmate
  *= require_self
+ *= require autocomplete-0.3.0
  */
+@import 'slick';
