@@ -43,6 +43,12 @@ var initializeMap = function() {
 //   $(window).keyup(function(event){ checkForEmptySearch() });
 // }
 
+var initializeAutoComplete = function() {
+  var fruits = ['Apple', 'Banana', 'Orange'];
+  var url = '/graduates?q={input}'
+  var widget = new AutoComplete('search_bar', url);
+}
+
 var initializeSlick = function() {
   $('.carousel').slick({
     vertical: true,
@@ -84,15 +90,14 @@ var populateGraduates = function(graduates) {
       position: latitude_longitude,
       map: window.map
     })
-    marker.indx = indexCounter
 
-    var contentString = "<div class='grad-panel' data-index=" + marker.indx + "><img class='grad-pic' src=" + graduate.img_url + "><div class='grad-content'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>"
+    var contentString = "<div class='grad-panel'><img class='grad-pic' src=" + graduate.img_url + "><div class='grad-content'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>"
     var infoWindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 140
     })
 
-      $(".carousel").append("<div class='grad-panel' data-index=" + marker.indx + "><img class='grad-pic' src=" + graduate.img_url + "><div class='grad-content'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>");
+      $(".carousel").append(contentString);
 
 
     markersArray.push(marker);
@@ -124,6 +129,5 @@ $(document).ready(function(){
   initializeMap();
   initializeSlick();
   populateMarkers();
-  var fruits = ['Apple', 'Banana', 'Orange'];
-  var widget = new AutoComplete('search_bar', fruits);
+  initializeAutoComplete();
 })
