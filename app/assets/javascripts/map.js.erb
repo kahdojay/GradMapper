@@ -12,7 +12,7 @@ var initializeMap = function() {
 }
 
 var populateGraduates = function(graduates) {
-  $('.carousel').slick('unslick');
+  // $('.carousel').slick('unslick');
   $("#grad-container").empty();
 
   graduates.forEach(function(graduate) {
@@ -30,7 +30,7 @@ var populateGraduates = function(graduates) {
         content: contentString,
         maxWidth: 140
     })
-    $(".carousel").append(contentString);
+    $("#grad-container").append(contentString);
     markersArray.push(marker);
     infoBoxes.push(infoWindow);
     google.maps.event.addListener(marker, 'mouseover', function() {
@@ -40,8 +40,6 @@ var populateGraduates = function(graduates) {
       infoWindow.open(window.map, marker);
     });
   })
-  $(".buttons-container").append('<p id="up">&#9650</p><p id="down">&#9660</p>')
-  initializeSlick();
 }
 
 var populateMarkers = function(cohortName) {
@@ -60,25 +58,8 @@ var initializeAutoComplete = function() {
   var widget = new AutoComplete('search_bar', url);
 }
 
-var initializeSlick = function() {
-  $('.carousel').slick({
-    vertical: true,
-    infinite: true,
-    dots: false,
-    prevArrow:"#up",
-    nextArrow:"#down",
-    infinite: true,
-    speed: 300,
-    slidesToShow: 4,
-    slidesToScroll: 3,
-  });
-
-  $('.carousel').find('.grad-panel')
-}
-
 $(document).ready(function(){
   initializeMap();
   populateMarkers();
-  initializeSlick();
   initializeAutoComplete();
 })
