@@ -57,7 +57,8 @@ body {
   text-align: center;
 }
 
-.search-container {
+#search_bar {
+  clear: both;
   margin: auto;
   text-align: center;
   width: 30%;
@@ -127,7 +128,7 @@ header {
 
 .buttons-container {
   right: 1.25rem;
-  position: fixed;
+  /*position: fixed;*/
   display: inline-block;
   cursor: pointer;
 }
@@ -169,3 +170,4 @@ p {
   font-size: 1.25rem;
   font-weight: bold;
 }
+
