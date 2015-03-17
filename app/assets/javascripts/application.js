@@ -13,5 +13,4 @@
 //= require jquery
 //= require turbolinks
 //= require_tree .
-//= require autocomplete-0.3.0
 //= require_tree .

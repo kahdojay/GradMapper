@@ -63,14 +63,7 @@ var populateMarkers = function(cohortName) {
   })
 }
 
-var initializeAutoComplete = function() {
-  var fruits = ['Apple', 'Banana', 'Orange'];
-  var url = '/graduates?q={input}'
-  var widget = new AutoComplete('search_bar', url);
-}
-
 $(document).ready(function(){
   initializeMap();
   populateMarkers();
-  initializeAutoComplete();
 })
