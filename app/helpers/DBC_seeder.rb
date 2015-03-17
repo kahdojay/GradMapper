@@ -1,7 +1,7 @@
 module DBCSeeder
   def self.seed(cohorts)
     cohorts.each do |c|
-      Cohort.create!(
+      Cohort.find_or_create_by(
         name: c.name,
         email: c.email,
         location: c.location,
@@ -9,7 +9,7 @@ module DBCSeeder
         dbc_id: c.id
       )
       c.students.each do |g|
-        Graduate.create!(
+        Graduate.find_or_create_by(
           cohort_name: c.name,
           name: g.name,
           email: g.email,
