@@ -16,14 +16,12 @@ class Graduate < ActiveRecord::Base
     end
     p "Seeding #{name}'s LinkedIn details"
     profile.picture ? update(img_url: profile.picture) : update(img_url: "app/assets/images/devbootcamplogo.jpeg")
-    if profile.current_companies[0]
-      update(company: profile.current_companies[0][:company])
-    end
-    if profile.location && profile.country
+    if !profile.current_companies[0] && profile.location && profile.country
       update(city: profile.location, state_or_country: profile.country)
       search = Geocoder.search("#{city}, #{state_or_country}")
     end
     if profile.current_companies[0] && profile.location && profile.country
+      update(company: profile.current_companies[0][:company], city: profile.location, state_or_country: profile.country)
       search = Geocoder.search("#{company} in #{city}, #{state_or_country}")
     end
     if search && search[0]
