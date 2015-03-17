@@ -1,6 +1,5 @@
 class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
-  # after_create :scrape_linkedin
 
   def self.scrape_li
     Graduate.order('name').each do |graduate|
@@ -22,12 +21,10 @@ class Graduate < ActiveRecord::Base
     end
     if profile.location && profile.country
       update(city: profile.location, state_or_country: profile.country)
-      # search = Geocoder.search("#{location.gsub(/Greater|Area|City/,'').strip} city")
       search = Geocoder.search("#{city}, #{state_or_country}")
     end
     if profile.current_companies[0] && profile.location && profile.country
       search = Geocoder.search("#{company} in #{city}, #{state_or_country}")
-      # search = Geocoder.search("#{company.gsub(/Company|company/,'')} company #{location.gsub(/Greater|Area|City|city/,'')} city")
     end
     if search && search[0]
       update(lat: search[0].latitude, long: search[0].longitude)
