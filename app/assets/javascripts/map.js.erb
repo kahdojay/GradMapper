@@ -30,6 +30,18 @@ var populateGraduates = function(graduates) {
         maxWidth: 140
     })
     $("#grad-container").append(contentString);
+    var $gradPanel = $("#grad-container").children().last()
+
+    if (graduate.lat !== "unknown") {
+      $gradPanel.on('click', function() {
+        infoBoxes.forEach(function(infoBox) {
+          infoBox.close();
+        })
+        infoWindow.open(window.map, marker);
+        map.panTo(marker.getPosition());
+        map.setZoom(12);
+      })
+    }
     markersArray.push(marker);
     infoBoxes.push(infoWindow);
     google.maps.event.addListener(marker, 'mouseover', function() {
