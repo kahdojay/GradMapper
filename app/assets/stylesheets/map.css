@@ -166,3 +166,6 @@ p {
   font-weight: bold;
 }
 
+.grad-panel:hover {
+  border: 1px solid black;
+}
