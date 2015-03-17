@@ -1,16 +1,28 @@
 class Cohort < ActiveRecord::Base
   has_many :graduates, primary_key: "dbc_id", foreign_key: "dbc_id"
-  # after_save :load_into_soulmate
-  # before_destroy :remove_from_soulmate
 
-  private
-  # def load_into_soulmate
-  #   loader = Soulmate::Loader.new("cohorts")
-  #   loader.add("term" => name, "id" => id, "data" => { "link" => Rails.application.routes.url_helpers.cohort_path(self) })
-  # end
-
-  # def remove_from_soulmate
-  #   loader = Soulmate::Loader.new("cohorts")
-  #   loader.remove("id" => id)
-  # end
+  def self.seed(cohorts)
+    cohorts.each do |c|
+      Cohort.find_or_create_by(
+        name: c.name,
+        email: c.email,
+        location: c.location,
+        start_date: c.start_date,
+        dbc_id: c.id
+      )
+      c.students.each do |g|
+        Graduate.find_or_create_by(
+          cohort_name: c.name,
+          name: g.name,
+          email: g.email,
+          github: g.profile[:github],
+          quora: g.profile[:quora],
+          twitter: g.profile[:twitter],
+          facebook: g.profile[:facebook],
+          linked_in: g.profile[:linked_in],
+          dbc_id: g.cohort_id
+        )
+      end
+    end
+  end
 end
