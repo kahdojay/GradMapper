@@ -1,13 +1,12 @@
 class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
-  after_create :scrape_linkedin
+  # after_create :scrape_linkedin
 
-  private
-
-  def scrape_linkedin
-    return "nil" if linked_in.nil?
-    return "empty" if linked_in.empty?
-    get_li_details(linked_in) if (linked_in.include?("linkedin") || linked_in.include?("lnkd"))
+  def self.scrape_li
+    Graduate.order('name').each do |graduate|
+      next if graduate.linked_in.nil? || graduate.linked_in.empty?
+      graduate.get_li_details(graduate.linked_in) if (graduate.linked_in.include?("linkedin") || graduate.linked_in.include?("lnkd"))
+    end
   end
 
   def get_li_details(link)
@@ -19,13 +18,19 @@ class Graduate < ActiveRecord::Base
     p "Seeding #{name}'s LinkedIn details"
     profile.picture ? update(img_url: profile.picture) : update(img_url: "app/assets/images/devbootcamplogo.jpeg")
     if profile.current_companies[0]
-      update(location: profile.current_companies[0][:address], company: profile.current_companies[0][:company])
-      search_string = location
-    else
-      update(location: profile.location, company: "company unknown")
-      search_string = "#{location} city"
+      update(company: profile.current_companies[0][:company])
     end
-    search = Geocoder.search(search_string)
-    update(lat: search[0].latitude, long: search[0].longitude) if search[0]
+    if profile.location && profile.country
+      update(city: profile.location, state_or_country: profile.country)
+      # search = Geocoder.search("#{location.gsub(/Greater|Area|City/,'').strip} city")
+      search = Geocoder.search("#{city}, #{state_or_country}")
+    end
+    if profile.current_companies[0] && profile.location && profile.country
+      search = Geocoder.search("#{company} in #{city}, #{state_or_country}")
+      # search = Geocoder.search("#{company.gsub(/Company|company/,'')} company #{location.gsub(/Greater|Area|City|city/,'')} city")
+    end
+    if search && search[0]
+      update(lat: search[0].latitude, long: search[0].longitude)
+    end
   end
 end
