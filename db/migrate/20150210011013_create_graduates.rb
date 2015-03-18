@@ -8,7 +8,7 @@ class CreateGraduates < ActiveRecord::Migration
       t.string  :twitter, {default: "unknown"}
       t.string  :facebook, {default: "unknown"}
       t.string  :linked_in, {default: "unknown"}
-      t.boolean :valid_linked_in?
+      t.boolean :valid_linked_in?, {default: false}
       t.integer :dbc_id, {default: "unknown"}
       t.string  :city, {default: "unknown"}
       t.string  :state_or_country

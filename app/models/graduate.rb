@@ -1,26 +1,30 @@
 class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
   # TODO: create after_create callback to popluate valid_linked_in?
+  after_create :check_valid_li
 
   def self.scrape_li
     Graduate.order('name').each do |graduate|
-      next if graduate.linked_in.nil? || graduate.linked_in.empty?
-      graduate.get_li_details(graduate.linked_in) if (graduate.linked_in.include?("linkedin") || graduate.linked_in.include?("lnkd"))
+      graduate.get_li_details(graduate.linked_in) if graduate.valid_linked_in?
     end
   end
 
   def self.rescrape_locations
-    Graduate.where(lat:"unknown").each do |graduate|
-      next if graduate.linked_in.nil? || graduate.linked_in.empty?
-      graduate.get_li_details(graduate.linked_in) if (graduate.linked_in.include?("linkedin") || graduate.linked_in.include?("lnkd"))
+    Graduate.where(lat:"unknown", valid_linked_in?: false).each do |graduate|
+      graduate.get_li_details(graduate.linked_in) if graduate.valid_linked_in? == true
+    end
+  end
+
+  def check_valid_li
+    if linked_in && (linked_in.include?("linkedin") || linked_in.include?("lnkd"))
+      update(valid_linked_in?: true)
     end
   end
 
   def get_li_details(link)
     profile = Linkedin::Profile.get_profile(link)
-    if profile.nil? || !profile.location || !profile.current_companies
-      p "Bad linked-in call"
-      sleep 1
+    if profile.nil? || !profile.location
+      p "Error"
       return "nil"
     end
     p "Seeding #{name}'s LinkedIn details"
@@ -42,9 +46,9 @@ class Graduate < ActiveRecord::Base
       end
     end
     if search && search[0]
-      # TODO: bug test random_modifier
-      random_modifier = (1+rand/2)/100 + 1
-      update(lat: search[0].latitude * random_modifier, long: search[0].longitude * random_modifier)
+      random_negater = [1, -1].sample
+      random_modifier = ((1+rand/2)/100 + 1)
+      update(lat: search[0].latitude * random_modifier * random_negater, long: search[0].longitude * random_modifier * random_negater)
     end
   end
 end
