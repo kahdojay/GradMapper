@@ -12,6 +12,6 @@
 //
 //= require jquery
 //= require oms
+//= require markerclusterer
 //= require turbolinks
-//= require_tree .
 //= require_tree .
