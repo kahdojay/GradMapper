@@ -48,7 +48,6 @@ var populateGraduates = function(graduates) {
 
     if (graduate.linked_in) {
       contentString += "<a href=";
-      console.log(graduate.linked_in)
       contentString += graduate.linked_in.replace(/\/$/,'');
       contentString += ">LinkedIn</a>";
     }
