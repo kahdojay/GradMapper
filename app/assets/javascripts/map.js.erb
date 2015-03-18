@@ -9,6 +9,7 @@ var initializeMap = function() {
     center: startLatlng
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  window.oms = new OverlappingMarkerSpiderfier(map)
 }
 
 var populateGraduates = function(graduates) {
@@ -20,6 +21,7 @@ var populateGraduates = function(graduates) {
       position: latitude_longitude,
       map: window.map
     })
+    oms.addMarker(marker);
 
 
     var contentString = "<div class='grad-panel'>";
@@ -30,7 +32,7 @@ var populateGraduates = function(graduates) {
     }
     contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name + "</p>";
 
-    if (graduate.city) {
+    if (graduate.city !== "city unknown") {
       contentString += "<p class='grad-city'>";
       contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
       contentString += "</p>";
@@ -57,7 +59,8 @@ var populateGraduates = function(graduates) {
         content: contentString,
         maxWidth: 140
     })
-    $("#grad-container").append(contentString);
+
+    $("#grad-container").append("<div class='grad-panel-wrapper'>" + contentString + "</div>");
     var $gradPanel = $("#grad-container").children().last()
 
     if (graduate.lat !== "unknown") {
@@ -77,6 +80,11 @@ var populateGraduates = function(graduates) {
         infoBox.close();
       })
       infoWindow.open(window.map, marker);
+    });
+
+    oms.addListener('click', function(marker) {
+      map.panTo(marker.getPosition());
+      map.setZoom(12)
     });
   })
 }
