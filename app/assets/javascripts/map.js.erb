@@ -20,11 +20,40 @@ var populateGraduates = function(graduates) {
       position: latitude_longitude,
       map: window.map
     })
-    if (graduate.img_url !== "unknown") {
-      var contentString = "<div class='grad-panel'><img class='grad-pic' src=" + graduate.img_url + "><div class='grad-content'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>"
+
+
+    var contentString = "<div class='grad-panel'>";
+    if (graduate.img_url) {
+      contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
     } else {
-      var contentString = "<div class='grad-panel'><img class='grad-pic' src='<%= asset_path('devbootcamplogo.jpeg') %>'><div class='grad-content' src='#'><p class='grad-name'>" + graduate.name + "</p><p class='grad-cohort_name'>" + graduate.cohort_name + "</p><p class='grad-company'>" + graduate.company + "</p>" + "<a href=" + graduate.linked_in + ">LinkedIn </a></div></div>"
+      contentString += "<img class='grad-pic' src='<%= asset_path('devbootcamplogo.jpeg') %>'>";
     }
+    contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name + "</p>";
+
+    if (graduate.city) {
+      contentString += "<p class='grad-city'>";
+      contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
+      contentString += "</p>";
+    }
+
+    contentString += "<p class='grad-cohort_name'>";
+    contentString += graduate.cohort_name;
+    contentString += "</p>";
+
+    if (graduate.company !== "company unknown") {
+      contentString += "<p class='grad-company'>";
+      contentString += graduate.company;
+      contentString += "</p>";
+    }
+
+    if (graduate.linked_in) {
+      contentString += "<a href=";
+      console.log(graduate.linked_in)
+      contentString += graduate.linked_in.replace(/\/$/,'');
+      contentString += ">LinkedIn</a>";
+    }
+    contentString += "</div></div>";
+
     var infoWindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 140
