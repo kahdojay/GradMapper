@@ -10,7 +10,7 @@ class CreateGraduates < ActiveRecord::Migration
       t.string  :linked_in, {default: "unknown"}
       t.boolean :valid_linked_in?, {default: false}
       t.integer :dbc_id, {default: "unknown"}
-      t.string  :city, {default: "unknown"}
+      t.string  :city, {default: "city unknown"}
       t.string  :state_or_country
       t.string  :company, {default: "company unknown"}
       t.string  :lat, {default: "unknown"}
