@@ -1,6 +1,5 @@
 class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
-  # TODO: create after_create callback to popluate valid_linked_in?
   after_create :check_valid_li
 
   def self.scrape_li
