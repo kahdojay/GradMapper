@@ -46,9 +46,8 @@ class Graduate < ActiveRecord::Base
       end
     end
     if search && search[0]
-      random_negater = [1, -1].sample
-      random_modifier = ((1+rand/2)/100 + 1)
-      update(lat: search[0].latitude * random_modifier * random_negater, long: search[0].longitude * random_modifier * random_negater)
+      random_modifier = ((1+rand/2)/10000 + 1)
+      update(lat: search[0].latitude * random_modifier, long: search[0].longitude * random_modifier)
     end
   end
 end
