@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require oms
 //= require turbolinks
 //= require_tree .
 //= require_tree .
