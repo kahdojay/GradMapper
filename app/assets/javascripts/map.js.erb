@@ -20,7 +20,7 @@ var populateGraduates = function(graduates) {
     if (graduate.img_url) {
       contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
     } else {
-      contentString += "<img class='grad-pic' src='<%= asset_path('devbootcamplogo.jpeg') %>'>";
+      contentString += "<img class='grad-pic' src='<%= asset_path('avatar.png') %>'>";
     }
     contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name + "</p>";
 

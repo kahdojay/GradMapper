@@ -27,7 +27,7 @@ class Graduate < ActiveRecord::Base
       return "nil"
     end
     p "Seeding #{name}'s LinkedIn details"
-    profile.picture ? update(img_url: profile.picture) : update(img_url: "app/assets/images/devbootcamplogo.jpeg")
+    profile.picture ? update(img_url: profile.picture) : update(img_url: "app/assets/images/avatar.png")
     if !profile.current_companies[0] && profile.location && profile.country
       update(city: profile.location, state_or_country: profile.country)
       if profile.location == profile.country
