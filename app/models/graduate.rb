@@ -3,14 +3,14 @@ class Graduate < ActiveRecord::Base
   after_create :check_valid_li
 
   def self.scrape_li
-    Graduate.order('name').each do |graduate|
-      graduate.get_li_details(graduate.linked_in) if graduate.valid_linked_in?
+    Graduate.where(valid_linked_in?: true).each do |graduate|
+      graduate.get_li_details(graduate.linked_in)
     end
   end
 
   def self.rescrape_locations
-    Graduate.where(lat:"unknown", valid_linked_in?: false).each do |graduate|
-      graduate.get_li_details(graduate.linked_in) if graduate.valid_linked_in? == true
+    Graduate.where(lat:"unknown", valid_linked_in?: true).each do |graduate|
+      graduate.get_li_details(graduate.linked_in)
     end
   end
 
@@ -45,8 +45,7 @@ class Graduate < ActiveRecord::Base
       end
     end
     if search && search[0]
-      random_modifier = ((1+rand/2)/10000 + 1)
-      update(lat: search[0].latitude * random_modifier, long: search[0].longitude * random_modifier)
+      update(lat: search[0].latitude, long: search[0].longitude)
     end
   end
 end

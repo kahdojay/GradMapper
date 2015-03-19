@@ -9,21 +9,13 @@ var initializeMap = function() {
     center: startLatlng
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  window.oms = new OverlappingMarkerSpiderfier(map)
+  // window.oms = new OverlappingMarkerSpiderfier(map)
 }
 
 var populateGraduates = function(graduates) {
   $("#grad-container").empty();
 
   graduates.forEach(function(graduate) {
-    var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
-    var marker = new google.maps.Marker({
-      position: latitude_longitude,
-      map: window.map
-    })
-    oms.addMarker(marker);
-
-
     var contentString = "<div class='grad-panel'>";
     if (graduate.img_url) {
       contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
@@ -55,6 +47,12 @@ var populateGraduates = function(graduates) {
     }
     contentString += "</div></div>";
 
+    var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
+    var marker = new google.maps.Marker({
+      position: latitude_longitude,
+      map: window.map
+    })
+    // oms.addMarker(marker);
     var infoWindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 140
@@ -82,10 +80,10 @@ var populateGraduates = function(graduates) {
       infoWindow.open(window.map, marker);
     });
 
-    oms.addListener('click', function(marker) {
-      map.panTo(marker.getPosition());
-      map.setZoom(12)
-    });
+    // oms.addListener('click', function(marker) {
+    //   map.panTo(marker.getPosition());
+    //   map.setZoom(12)
+    // });
   })
 }
 
@@ -95,7 +93,9 @@ var populateMarkers = function(cohortName) {
     url: "/graduates",
     data: {cohort: cohortName}
   }).done(function(response) {
-    populateGraduates(response)
+    populateGraduates(response);
+  }).done(function() {
+    var markerCluster = new MarkerClusterer(map, markersArray);
   })
 }
 

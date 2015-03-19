@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require markerclusterer
 //= require oms
 //= require turbolinks
-//= require_tree .
 //= require_tree .
