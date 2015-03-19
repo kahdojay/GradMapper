@@ -79,6 +79,9 @@ var populateGraduates = function(graduates) {
       })
       infoWindow.open(window.map, marker);
     });
+    google.maps.event.addListener(marker, 'mouseout', function() {
+      infoWindow.close();
+    });
   })
 }
 
