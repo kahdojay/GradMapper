@@ -159,3 +159,9 @@ p {
 .grad-panel-wrapper:hover {
   border: 1px solid black;
 }
+
+footer {
+  clear: both;
+  text-align: center;
+
+}
