@@ -9,8 +9,6 @@ var initializeMap = function() {
     center: startLatlng
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  window.oms = new OverlappingMarkerSpiderfier(map)
-  var mc = new MarkerClusterer(map);
 }
 
 var populateGraduates = function(graduates) {
@@ -53,7 +51,6 @@ var populateGraduates = function(graduates) {
       position: latitude_longitude,
       map: window.map
     })
-    oms.addMarker(marker);
     var infoWindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 140
@@ -80,11 +77,6 @@ var populateGraduates = function(graduates) {
       })
       infoWindow.open(window.map, marker);
     });
-
-    oms.addListener('click', function(marker) {
-      map.panTo(marker.getPosition());
-      map.setZoom(12)
-    });
   })
 }
 
@@ -94,7 +86,9 @@ var populateMarkers = function(cohortName) {
     url: "/graduates",
     data: {cohort: cohortName}
   }).done(function(response) {
-    populateGraduates(response)
+    populateGraduates(response);
+  }).done(function() {
+    var markerCluster = new MarkerClusterer(map, markersArray);
   })
 }
 
