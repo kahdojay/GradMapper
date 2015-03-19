@@ -24,7 +24,7 @@ var populateGraduates = function(graduates) {
     }
     contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name + "</p>";
 
-    if (graduate.city !== "city unknown") {
+    if (graduate.city) {
       contentString += "<p class='grad-city'>";
       contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
       contentString += "</p>";
