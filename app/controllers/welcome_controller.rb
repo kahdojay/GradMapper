@@ -6,9 +6,9 @@ class WelcomeController < ApplicationController
     if params["cohort"]
       cohort_name = params["cohort"].delete("\n").strip
       @cohort = Cohort.find_by(name: cohort_name)
-      @graduates = @cohort.graduates.order('name')
+      @graduates = @cohort.graduates.where(display: true).order('name')
     else
-      @graduates = Graduate.order('name')
+      @graduates = Graduate.where(display: true).order('name')
     end
     render json: @graduates if request.xhr?
   end

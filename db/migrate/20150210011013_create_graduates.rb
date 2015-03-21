@@ -1,6 +1,7 @@
 class CreateGraduates < ActiveRecord::Migration
   def change
     create_table :graduates do |t|
+      t.boolean :display, {default: false}
       t.string  :name, {default: "unknown"}
       t.string  :email, {default: "unknown"}
       t.string  :github, {default: "unknown"}

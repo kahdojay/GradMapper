@@ -45,7 +45,7 @@ class Graduate < ActiveRecord::Base
       end
     end
     if search && search[0]
-      update(lat: search[0].latitude, long: search[0].longitude)
+      update(lat: search[0].latitude, long: search[0].longitude, display: true)
     end
   end
 end
