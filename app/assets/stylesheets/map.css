@@ -100,6 +100,48 @@ header {
   max-height: 100%;
 }
 
+#search-container {
+  text-align: center;
+  margin: 1rem;
+}
+
+div#search-bar {
+  display: inline-block;
+  width: 60%;
+  float: left;
+}
+
+div#search-bar div.cell {
+  display: table-cell;
+}
+
+div#search-bar div.cell:last-child {
+  width: 1px;
+}
+
+input[type=search], div.button {
+  width: 100%;
+  height: 35px;
+
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input[type=search] {
+  margin: 0;
+  padding: 0 10px;
+
+  background-color: #white;
+
+  border: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+
 /* Custom dropdown */
 .big {
   font-size: 1.2em;
@@ -109,6 +151,8 @@ header {
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  margin: 0;
+  padding: 0;
 }
 .wide {
   width: 5rem;
@@ -170,10 +214,6 @@ header {
 
 /* End custom dropdown */
 
-#search-container {
-  text-align: center;
-  margin-bottom: 1rem;
-}
 
 form {
   margin-top: 1rem;
@@ -202,7 +242,6 @@ form {
   float: left;
   height: 7rem;
   max-width: 45%;
-  /*max-width: 6rem;*/
   margin-right: 5%;
 }
 
@@ -210,51 +249,10 @@ form {
   display: inline-block;
   max-height: 85%;
   max-width: 45%;
-  /*max-width: 12rem;*/
 }
 
 .grad-cohort-name, .grad-city, .grad-company {
   color: gray;
-}
-
-
-div#search-bar {
-  display: inline-block;
-
-  /* I want the whole search box
-     to be exactly this wide. */
-  width: 60%;
-  /*float: left;*/
-
-  /*margin: 1rem auto 0;*/
-}
-div#search-bar div.cell {
-  display: table-cell;
-}
-div#search-bar div.cell:last-child {
-  width: 1px;
-}
-
-input[type=search], div.button {
-  width: 100%;
-  height: 35px;
-
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-
-  font-family: inherit;
-  font-size: inherit;
-}
-
-input[type=search] {
-  margin: 0;
-  padding: 0 10px;
-
-  background-color: #white;
-
-  border: 0;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
 }
 
 
