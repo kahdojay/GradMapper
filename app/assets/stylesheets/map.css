@@ -3,11 +3,34 @@ body {
   margin: 0;
   background: #f8f8f8;
   font-family: "Helvetica Neue";
-  /*background-size: 100vw 100vh;*/
 }
 
-.logo {
-  display: inline-block;
+p {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5rem;
+}
+
+h3 {
+  padding: .25rem;
+  margin: .25rem;
+}
+
+a {
+  text-decoration: none;
+  color: #F7665C;
+  line-height: 1.5rem;
+}
+
+header {
+  border: 1px solid #F7665C;
+  text-align: center;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  overflow: auto;
+  background: #333333;
+  width: 100%;
+  margin-bottom: .5rem;
 }
 
 .title {
@@ -26,7 +49,7 @@ body {
   width: 46%;
   font-size: 1.2rem;
   letter-spacing: .05rem;
-  color: #B3D1FF  ;
+  color: #b3d1ff;
   font-family: 'Open Sans';
   text-shadow: .5px .5px black;
   padding: 0;
@@ -34,55 +57,29 @@ body {
   height: 1.25rem;
 }
 
-#map-canvas {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 #map-container {
   float: left;
   display: inline-block;
-  width: 65%;
-  height: 35rem;
+  width: 70%;
+  height: 75vh;
   border-radius: 16px 16px;
   border-color: #fff;
   border-style: solid;
   box-shadow: 2px 2px 10px #B1B1B1;
   border-width: 7px;
   margin: .5rem;
+  margin-left: 2.75%;
   padding: 0;
 }
 
-#cohort-search {
-  text-align: center;
+#map-canvas {
+  height: 75vh;
+  background-color: #333333;
 }
 
-#search {
-  height: 3rem;
-  width: 100%;
-}
-
-header {
-  border: 1px solid #F7665C;
-  text-align: center;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-  overflow: auto;
-  background: #333333;
-  width: 100%;
-  margin-bottom: .5rem;
-}
-
-#grad-bar {
-  height: 10rem;
-  overflow: hidden;
-}
-
-#grad-container {
-  height: 35rem;
-  width: 25%;
-  float:right;
+#side-panel {
+  height: 75vh;
+  width: 20%;
   display: inline-block;
   text-align: left;
   border-radius: 16px 16px;
@@ -91,11 +88,102 @@ header {
   box-shadow: 2px 2px 10px #B1B1B1;
   border-width: 7px;
   margin-top: .5rem;
-  margin-right: 2.5rem;
-  overflow: scroll;
+  margin-left: 2.5rem;
   padding: 0;
+  overflow: hidden;
   box-shadow: 2px 2px 10px #B1B1B1;
   border-width: 7px;
+}
+
+#grad-container {
+  overflow: scroll;
+  max-height: 100%;
+}
+
+/* Custom dropdown */
+.big {
+  font-size: 1.2em;
+}
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.wide {
+  width: 5rem;
+}
+.custom-dropdown select {
+  background-color: #b3d1ff;
+  color: #F7665C;
+  font-size: inherit;
+  padding: .25em;
+  padding-right: 2.5em;
+  border: 0;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+}
+
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.custom-dropdown::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+}
+
+.custom-dropdown::before { /*  Custom dropdown arrow cover */
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+.custom-dropdown select[disabled] {
+  color: rgba(0,0,0,.3);
+}
+
+.custom-dropdown select[disabled]::after {
+  color: rgba(0,0,0,.1);
+}
+
+.custom-dropdown::before {
+  background-color: rgba(0,0,0,.15);
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.4);
+}
+
+/* End custom dropdown */
+
+#search-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+form {
+  margin-top: 1rem;
+}
+
+
+.grad-panel {
+  box-shadow: .5px .5px 10px #B1B1B1;
+  padding: .5rem;
+  overflow: hidden;
 }
 
 .grad-pic {
@@ -112,43 +200,64 @@ header {
   max-width: 12rem;
 }
 
-.grad-panel {
-  box-shadow: .5px .5px 10px #B1B1B1;
-  padding: .5rem;
-  overflow: hidden;
+.grad-cohort-name, .grad-city, .grad-company {
+  color: gray;
 }
 
-.btn {
-  background: #B3D1FF;
-  background-image: -webkit-linear-gradient(top, #B3D1FF, #2980b9);
-  background-image: -moz-linear-gradient(top, #B3D1FF, #2980b9);
-  background-image: -ms-linear-gradient(top, #B3D1FF, #2980b9);
-  background-image: -o-linear-gradient(top, #B3D1FF, #2980b9);
-  background-image: linear-gradient(to bottom, #B3D1FF, #2980b9);
-  -webkit-border-radius: 15;
-  -moz-border-radius: 15;
-  border-radius: .3rem;
-  font-family: "Helvetica Neue";
-  color: #333333;
-  font-size: .2rem;
-  padding: .2rem;
-  border: solid #333333 1px;
-  text-decoration: none;
+
+div#search-bar {
+  display: inline-block;
+
+  /* I want the whole search box
+     to be exactly this wide. */
+  width: 60%;
+  /*float: left;*/
+
+  /*margin: 1rem auto 0;*/
+}
+div#search-bar div.cell {
+  display: table-cell;
+}
+div#search-bar div.cell:last-child {
+  width: 1px;
 }
 
-.btn:hover {
-  background: #3498db;
-  background-image: -webkit-linear-gradient(top, #3498db, #3cb0fd);
-  background-image: -moz-linear-gradient(top, #3498db, #3cb0fd);
-  background-image: -ms-linear-gradient(top, #3498db, #3cb0fd);
-  background-image: -o-linear-gradient(top, #3498db, #3cb0fd);
-  background-image: linear-gradient(to bottom, #3498db, #3cb0fd);
-  text-decoration: none;
+input[type=search], div.button {
+  width: 100%;
+  height: 35px;
+
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  font-family: inherit;
+  font-size: inherit;
 }
 
-p {
-  padding: 0;
+input[type=search] {
   margin: 0;
+  padding: 0 10px;
+
+  background-color: #white;
+
+  border: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+div.button {
+  line-height: 35px;
+
+  margin: 0;
+  padding: 0 20px;
+
+  color: #fff;
+  background-color: #2980b9;
+  font-weight: bold;
+
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  white-space: nowrap;
 }
 
 .grad-name {
@@ -156,12 +265,12 @@ p {
   font-weight: bold;
 }
 
-.grad-panel-wrapper:hover {
-  border: 1px solid black;
+.grad-panel:hover {
+  box-shadow: .5px .5px 10px #333333;
 }
 
 footer {
+  padding-top: 1rem;
   clear: both;
   text-align: center;
-
 }
