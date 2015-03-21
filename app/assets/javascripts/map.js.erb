@@ -21,7 +21,15 @@ var populateGraduates = function(graduates) {
     } else {
       contentString += "<img class='grad-pic' src='<%= asset_path('avatar.png') %>'>";
     }
-    contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name + "</p>";
+    contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name
+
+    if (graduate.linked_in) {
+      contentString += "<br><a class='linked-in' href=";
+      contentString += graduate.linked_in.replace(/\/$/,'');
+      contentString += "> (LinkedIn)</a>";
+    }
+
+    contentString += "</p>"
 
     if (graduate.city && graduate.city !== "city unknown") {
       contentString += "<p class='grad-city'>";
@@ -35,11 +43,6 @@ var populateGraduates = function(graduates) {
       contentString += "</p>";
     }
 
-    if (graduate.linked_in) {
-      contentString += "<a href=";
-      contentString += graduate.linked_in.replace(/\/$/,'');
-      contentString += ">LinkedIn</a>";
-    }
     contentString += "</div></div>";
 
     var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))

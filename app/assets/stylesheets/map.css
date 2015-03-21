@@ -8,7 +8,7 @@ body {
 p {
   padding: 0;
   margin: 0;
-  line-height: 1.5rem;
+  line-height: 1.25rem;
 }
 
 h3 {
@@ -19,7 +19,7 @@ h3 {
 a {
   text-decoration: none;
   color: #F7665C;
-  line-height: 1.5rem;
+  line-height: 1.25rem;
 }
 
 header {
@@ -234,6 +234,10 @@ form {
 .grad-name {
   font-size: 1.25rem;
   font-weight: bold;
+}
+
+.linked-in {
+  font-size: .5rem;
 }
 
 
