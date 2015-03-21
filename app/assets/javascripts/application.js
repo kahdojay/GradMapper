@@ -13,5 +13,6 @@
 //= require jquery
 //= require markerclusterer
 //= require oms
+//= require typeahead
 //= require turbolinks
 //= require_tree .
