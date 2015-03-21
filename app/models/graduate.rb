@@ -14,6 +14,12 @@ class Graduate < ActiveRecord::Base
     end
   end
 
+  def self.offset_everybody
+    Graduate.where(display: true).each do |graduate|
+      graduate.update(lat: graduate.lat.to_f + rand(-0.002..0.002), long: graduate.long.to_f + rand(-0.004..0.004))
+    end
+  end
+
   def check_valid_li
     if linked_in && (linked_in.include?("linkedin") || linked_in.include?("lnkd"))
       update(valid_linked_in?: true)
@@ -31,17 +37,17 @@ class Graduate < ActiveRecord::Base
     if !profile.current_companies[0] && profile.location && profile.country
       update(city: profile.location, state_or_country: profile.country)
       if profile.location == profile.country
-        search = Geocoder.search("#{city.gsub(/Greater|Area|City/,'').strip} City")
+        search = Geocoder.search("#{profile.location.gsub(/Greater|Area|City/,'').strip} City")
       else
-        search = Geocoder.search("#{city.gsub(/Greater|Area|City/,'').strip} City, #{state_or_country}")
+        search = Geocoder.search("#{profile.location.gsub(/Greater|Area|City/,'').strip} City, #{profile.country}")
       end
     end
     if profile.current_companies[0] && profile.location && profile.country
       update(company: profile.current_companies[0][:company], city: profile.location, state_or_country: profile.country)
       if profile.location == profile.country
-        search = Geocoder.search("#{company} in #{city.gsub(/Greater|Area|City/,'').strip} City")
+        search = Geocoder.search("#{profile.current_companies[0][:company]} in #{profile.location.gsub(/Greater|Area|City/,'').strip} City")
       else
-        search = Geocoder.search("#{company} in #{city.gsub(/Greater|Area|City/,'').strip} City, #{state_or_country}")
+        search = Geocoder.search("#{profile.current_companies[0][:company]} in #{profile.country}, #{profile.location.gsub(/Greater|Area|City/,'').strip} City")
       end
     end
     if search && search[0]

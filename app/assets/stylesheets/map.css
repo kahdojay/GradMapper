@@ -182,22 +182,35 @@ form {
 
 .grad-panel {
   box-shadow: .5px .5px 10px #B1B1B1;
-  padding: .5rem;
+  padding: 1%;
   overflow: hidden;
+  height: 50%;
 }
+
+.grad-panel:hover {
+  box-shadow: .5px .5px 10px #333333;
+}
+
+.grad-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
 
 .grad-pic {
   display: inline-block;
   float: left;
   height: 7rem;
-  max-width: 6rem;
+  max-width: 45%;
+  /*max-width: 6rem;*/
   margin-right: 5%;
 }
 
 .grad-content {
   display: inline-block;
   max-height: 85%;
-  max-width: 12rem;
+  max-width: 45%;
+  /*max-width: 12rem;*/
 }
 
 .grad-cohort-name, .grad-city, .grad-company {
@@ -244,30 +257,6 @@ input[type=search] {
   border-bottom-left-radius: 5px;
 }
 
-div.button {
-  line-height: 35px;
-
-  margin: 0;
-  padding: 0 20px;
-
-  color: #fff;
-  background-color: #2980b9;
-  font-weight: bold;
-
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-
-  white-space: nowrap;
-}
-
-.grad-name {
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
-.grad-panel:hover {
-  box-shadow: .5px .5px 10px #333333;
-}
 
 footer {
   padding-top: 1rem;

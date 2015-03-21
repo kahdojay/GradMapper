@@ -9,14 +9,13 @@ var initializeMap = function() {
     center: startLatlng
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  window.oms = new OverlappingMarkerSpiderfier(map)
 }
 
 var populateGraduates = function(graduates) {
   $("#grad-container").empty();
 
   graduates.forEach(function(graduate) {
-    var contentString = "<div class='grad-panel hvr-border-fade'>";
+    var contentString = "<div class='grad-panel'>";
     if (graduate.img_url) {
       contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
     } else {
@@ -36,16 +35,11 @@ var populateGraduates = function(graduates) {
       contentString += "</p>";
     }
 
-    // contentString += "<p class='grad-cohort-name'>";
-    // contentString += graduate.cohort_name;
-    // contentString += "</p>";
-
-
-    // if (graduate.linked_in) {
-    //   contentString += "<a href=";
-    //   contentString += graduate.linked_in.replace(/\/$/,'');
-    //   contentString += ">LinkedIn</a>";
-    // }
+    if (graduate.linked_in) {
+      contentString += "<a href=";
+      contentString += graduate.linked_in.replace(/\/$/,'');
+      contentString += ">LinkedIn</a>";
+    }
     contentString += "</div></div>";
 
     var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
@@ -53,10 +47,9 @@ var populateGraduates = function(graduates) {
       position: latitude_longitude,
       map: window.map
     })
-    oms.addMarker(marker);
     var infoWindow = new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 140
+        maxWidth: 500
     })
 
     $("#grad-container").append("<div class='grad-panel-wrapper'>" + contentString + "</div>");
