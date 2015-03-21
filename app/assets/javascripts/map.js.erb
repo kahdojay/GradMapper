@@ -2,9 +2,9 @@ var markersArray = [];
 var infoBoxes = [];
 
 var initializeMap = function() {
-  var startLatlng = new google.maps.LatLng(40.7048872,-74.0123737);
+  var startLatlng = new google.maps.LatLng(38.0984323,-93.6047106);
   var mapOptions = {
-    zoom: 3,
+    zoom: 5,
     minZoom: 3,
     center: startLatlng
   };
@@ -16,7 +16,7 @@ var populateGraduates = function(graduates) {
   $("#grad-container").empty();
 
   graduates.forEach(function(graduate) {
-    var contentString = "<div class='grad-panel'>";
+    var contentString = "<div class='grad-panel hvr-border-fade'>";
     if (graduate.img_url) {
       contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
     } else {
@@ -24,15 +24,11 @@ var populateGraduates = function(graduates) {
     }
     contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name + "</p>";
 
-    if (graduate.city) {
+    if (graduate.city && graduate.city !== "city unknown") {
       contentString += "<p class='grad-city'>";
       contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
       contentString += "</p>";
     }
-
-    contentString += "<p class='grad-cohort_name'>";
-    contentString += graduate.cohort_name;
-    contentString += "</p>";
 
     if (graduate.company !== "company unknown") {
       contentString += "<p class='grad-company'>";
@@ -40,11 +36,16 @@ var populateGraduates = function(graduates) {
       contentString += "</p>";
     }
 
-    if (graduate.linked_in) {
-      contentString += "<a href=";
-      contentString += graduate.linked_in.replace(/\/$/,'');
-      contentString += ">LinkedIn</a>";
-    }
+    // contentString += "<p class='grad-cohort-name'>";
+    // contentString += graduate.cohort_name;
+    // contentString += "</p>";
+
+
+    // if (graduate.linked_in) {
+    //   contentString += "<a href=";
+    //   contentString += graduate.linked_in.replace(/\/$/,'');
+    //   contentString += ">LinkedIn</a>";
+    // }
     contentString += "</div></div>";
 
     var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
@@ -80,7 +81,13 @@ var populateGraduates = function(graduates) {
       infoWindow.open(window.map, marker);
     });
     google.maps.event.addListener(marker, 'mouseout', function() {
-      infoWindow.close();
+      window.setTimeout(function() { infoWindow.close() }, 3000)
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+      $("#grad-container").scrollTop(0)
+      $("#grad-container").animate({
+        scrollTop: $gradPanel.offset().top - 225
+      })
     });
   })
 }
