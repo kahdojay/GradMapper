@@ -1,11 +1,10 @@
-var nameArray = []
-var cohortArray = []
-var companyArray = []
-var markersArray = [];
-var infoBoxes = [];
-var markerCluster = null;
-
 var initializeMap = function() {
+  window.nameArray = []
+  window.cohortArray = []
+  window.companyArray = []
+  window.markersArray = [];
+  window.infoBoxes = [];
+  window.markerCluster = null;
   var startLatlng = new google.maps.LatLng(38.0984323,-93.6047106);
   var mapOptions = {
     zoom: 4,
@@ -37,7 +36,7 @@ var populateGraduates = function(graduates) {
     gradPanelString += "<div class='grad-content'><p class='grad-name'>" + graduate.name
 
     if (graduate.linked_in) {
-      gradPanelString += "<div id='social'><a class='linkedinBtn smGlobalBtn' href=";
+      gradPanelString += "<div id='social'><a target='_blank' class='linkedinBtn smGlobalBtn' href=";
       gradPanelString += graduate.linked_in.replace(/\/$/,'');
       gradPanelString += "></a></div>";
     }
@@ -195,14 +194,27 @@ var initializeSearch = function() {
 
   var checkForEmptySearch = function() {
     if ($(".tt-input").val() === "") {
-      clearMarkers();
-      populateMarkers()
+      resetMap();
     }
   }
+}
+
+var initializeTitleButton = function() {
+  $(".btn-title").on("click", function() {
+    resetMap();
+  })
+}
+
+var resetMap = function() {
+  clearMarkers();
+  $(".twitter-typeahead").find("input").val("")
+  initializeMap();
+  populateMarkers();
 }
 
 $(document).ready(function(){
   initializeMap();
   populateMarkers();
   initializeSearch();
+  initializeTitleButton();
 })
