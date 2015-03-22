@@ -97,7 +97,7 @@ header {
 
 #grad-container {
   overflow: scroll;
-  max-height: 100%;
+  height: 85%;
 }
 
 #search-container {
