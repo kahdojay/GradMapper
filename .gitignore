@@ -44,3 +44,4 @@ build/
 /tmp
 /db/schema.rb
 path
+/db/canned/
