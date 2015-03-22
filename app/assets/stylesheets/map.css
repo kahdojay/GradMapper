@@ -237,7 +237,7 @@ input[type=search] {
   border-radius: 3px;
   text-indent: 0.01px;
   text-overflow: '';
-  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+  -webkit-appearance: button;
 }
 
 .custom-dropdown::before,
@@ -247,7 +247,7 @@ input[type=search] {
   pointer-events: none;
 }
 
-.custom-dropdown::after { /*  Custom dropdown arrow */
+.custom-dropdown::after {
   content: "\25BC";
   height: 1em;
   font-size: .625em;
@@ -257,7 +257,7 @@ input[type=search] {
   margin-top: -.5em;
 }
 
-.custom-dropdown::before { /*  Custom dropdown arrow cover */
+.custom-dropdown::before {
   width: 2em;
   right: 0;
   top: 0;
@@ -282,7 +282,6 @@ input[type=search] {
 }
 
 /* End custom dropdown */
-
 
 form {
   margin-top: 1rem;

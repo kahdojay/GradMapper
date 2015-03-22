@@ -130,7 +130,6 @@ var populateMarkers = function(filter, input) {
 
 
   $.ajax(searchInputs).done(function(response) {
-    console.log("Response length is " + Object.keys(response).length)
     populateGraduates(response);
   }).done(function() {
     markerCluster = new MarkerClusterer(map, markersArray);
