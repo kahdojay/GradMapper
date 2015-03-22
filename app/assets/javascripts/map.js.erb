@@ -17,9 +17,7 @@ var initializeMap = function() {
 
 var populateGraduates = function(graduates) {
   $("#grad-container").empty();
-  // markersArray = []
   infoBoxes = []
-  // nameArray = []
 
   graduates.forEach(function(graduate) {
     if (graduate.display === true) {
@@ -170,6 +168,8 @@ var initializeSearch = function() {
     });
   }
 
+  setTypeAhead(nameArray)
+
   var searchFilter = "name"
 
   $("#ddrp1").on("change", function() {
@@ -183,7 +183,6 @@ var initializeSearch = function() {
     else if (searchFilter === "cohort") {
       setTypeAhead(cohortArray)
     }
-    console.log("searchFilter set to " + searchFilter)
   })
 
   $('.typeahead').bind('typeahead:selected', function(obj, datum, name) {
@@ -191,8 +190,6 @@ var initializeSearch = function() {
     $("#grad-container").empty();
     clearMarkers();
     populateMarkers(searchFilter, input);
-    console.log(searchFilter)
-    console.log(input)
   });
 }
 
