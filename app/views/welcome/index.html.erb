@@ -1,22 +1,16 @@
 <section id="map-container">
   <div id="map-canvas"></div>
-  <footer>
-    <br>
-    <p>If you're a DBC grad and wish to be removed from this list, please email info at gradmapper (sorry for the intrusion).</p>
-    <p>If you don't see yourself and would like to be included, or if you wish to fix any inaccurate info, please email info at gradmapper.</p>
-  </footer>
 </section>
+
 <section id="side-panel">
   <div id="search-container">
-    <!-- <h3>Search by <a class="search-option" href="#">name</a>  |  <a class="search-option" href="#">company</a>  |  <a class="search-option" href="#">cohort</a></h3> -->
-
     <div id='search-bar'>
-      <div class='cell'><input type='search' placeholder='search by..'></div>
+      <div class='cell'><input class="typeahead" type='search' placeholder='search by..'></div>
       <div class='cell'></div>
     </div>
 
     <span class="custom-dropdown big">
-        <select>
+        <select id="ddrp1">
             <option>name</option>
             <option>company</option>
             <option>cohort</option>
@@ -26,3 +20,9 @@
   <div id="grad-container">
   </div>
 </section>
+<footer>
+  <br>
+  <p>These locations are indicative only of the city location in general, and not workplace/home addresses.</p>
+  <p>If you're a DBC grad and wish to be removed from this list, please email info at gradmapper (sorry for the intrusion).</p>
+  <p>If you don't see yourself and would like to be included, or if you wish to fix any inaccurate info, please email info at gradmapper.</p>
+</footer>

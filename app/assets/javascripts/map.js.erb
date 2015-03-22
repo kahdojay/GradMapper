@@ -1,5 +1,9 @@
+var nameArray = []
+var cohortArray = []
+var companyArray = []
 var markersArray = [];
 var infoBoxes = [];
+var markerCluster = null;
 
 var initializeMap = function() {
   var startLatlng = new google.maps.LatLng(38.0984323,-93.6047106);
@@ -13,8 +17,15 @@ var initializeMap = function() {
 
 var populateGraduates = function(graduates) {
   $("#grad-container").empty();
+  infoBoxes = []
 
   graduates.forEach(function(graduate) {
+    if (graduate.display === true) {
+      nameArray.push(graduate.name)
+      cohortArray.indexOf(graduate.cohort_name) === -1 ? cohortArray.push(graduate.cohort_name) : ""
+      companyArray.indexOf(graduate.company) === -1 ? companyArray.push(graduate.company) : ""
+    }
+
     var contentString = "<div class='grad-panel'>";
     if (graduate.img_url) {
       contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
@@ -36,6 +47,11 @@ var populateGraduates = function(graduates) {
       contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
       contentString += "</p>";
     }
+
+    // TODO: make state show as appropriate
+    // if (graduate.city && graduate.city !== graduate.state_or_country) {
+    //   contentString
+    // }
 
     if (graduate.company !== "company unknown") {
       contentString += "<p class='grad-company'>";
@@ -65,7 +81,7 @@ var populateGraduates = function(graduates) {
         })
         infoWindow.open(window.map, marker);
         map.panTo(marker.getPosition());
-        map.setZoom(12);
+        map.setZoom(15);
       })
     }
     markersArray.push(marker);
@@ -88,20 +104,97 @@ var populateGraduates = function(graduates) {
   })
 }
 
-var populateMarkers = function(cohortName) {
-  $.ajax({
+var setAllMap = function(map) {
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(map);
+  }
+}
+
+var clearMarkers = function() {
+  markerCluster.clearMarkers();
+  setAllMap(null);
+  markersArray = [];
+}
+
+
+var populateMarkers = function(filter, input) {
+  var searchInputs = {
     type: "GET",
     url: "/graduates",
-    data: {cohort: cohortName}
-  }).done(function(response) {
+  }
+
+  if (filter && input) {
+    searchInputs.data = {
+      filter: filter.replace(/^\s+|\s+$/g, ''),
+      input: input.replace(/^\s+|\s+$/g, '')
+    }
+  }
+
+
+  $.ajax(searchInputs).done(function(response) {
+    console.log("Response length is " + Object.keys(response).length)
     populateGraduates(response);
   }).done(function() {
-    var markerCluster = new MarkerClusterer(map, markersArray);
+    markerCluster = new MarkerClusterer(map, markersArray);
     markerCluster.setMaxZoom(12)
   })
+}
+
+var initializeSearch = function() {
+  var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+      var matches, substrRegex;
+      matches = [];
+      substrRegex = new RegExp(q, 'i');
+      $.each(strs, function(i, str) {
+        if (substrRegex.test(str)) {
+          matches.push({ value: str });
+        }
+      });
+      cb(matches);
+    };
+  };
+
+  var setTypeAhead = function(suggestions) {
+    $('.typeahead').typeahead('destroy')
+    $('.typeahead').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    },
+    {
+      displayKey: 'value',
+      source: substringMatcher(suggestions)
+    });
+  }
+
+  setTypeAhead(nameArray)
+
+  var searchFilter = "name"
+
+  $("#ddrp1").on("change", function() {
+    searchFilter = $(this).find(':selected').val();
+    if (searchFilter === "name") {
+      setTypeAhead(nameArray)
+    }
+    else if (searchFilter === "company") {
+      setTypeAhead(companyArray)
+    }
+    else if (searchFilter === "cohort") {
+      setTypeAhead(cohortArray)
+    }
+  })
+
+  $('.typeahead').bind('typeahead:selected', function(obj, datum, name) {
+    var input = $(event.target).parent()[0].innerText
+    $("#grad-container").empty();
+    clearMarkers();
+    populateMarkers(searchFilter, input);
+  });
 }
 
 $(document).ready(function(){
   initializeMap();
   populateMarkers();
+  initializeSearch();
 })
