@@ -8,9 +8,10 @@ var markerCluster = null;
 var initializeMap = function() {
   var startLatlng = new google.maps.LatLng(38.0984323,-93.6047106);
   var mapOptions = {
-    zoom: 5,
+    zoom: 4,
     minZoom: 3,
-    center: startLatlng
+    center: startLatlng,
+    disableDefaultUI: true
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
@@ -25,39 +26,40 @@ var populateGraduates = function(graduates) {
       cohortArray.indexOf(graduate.cohort_name) === -1 ? cohortArray.push(graduate.cohort_name) : ""
       companyArray.indexOf(graduate.company) === -1 ? companyArray.push(graduate.company) : ""
     }
+    var infoWindowString = "<p class='grad-name'>" + graduate.name + "</p>"
 
-    var contentString = "<div class='grad-panel'>";
+    var gradPanelString = "<div class='grad-panel'>";
     if (graduate.img_url) {
-      contentString += "<img class='grad-pic' src=" + graduate.img_url + ">";
+      gradPanelString += "<img class='grad-pic' src=" + graduate.img_url + ">";
     } else {
-      contentString += "<img class='grad-pic' src='<%= asset_path('avatar.png') %>'>";
+      gradPanelString += "<img class='grad-pic' src='<%= asset_path('avatar.png') %>'>";
     }
-    contentString += "<div class='grad-content'><p class='grad-name'>" + graduate.name
+    gradPanelString += "<div class='grad-content'><p class='grad-name'>" + graduate.name
 
     if (graduate.linked_in) {
-      contentString += "<br><a class='linked-in' href=";
-      contentString += graduate.linked_in.replace(/\/$/,'');
-      contentString += "> (LinkedIn)</a>";
+      gradPanelString += "<div id='social'><a class='linkedinBtn smGlobalBtn' href=";
+      gradPanelString += graduate.linked_in.replace(/\/$/,'');
+      gradPanelString += "></a></div>";
     }
 
-    contentString += "</p>"
+    gradPanelString += "</p>"
 
     if (graduate.city && graduate.city !== "city unknown") {
-      contentString += "<p class='grad-city'>";
-      contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
+      gradPanelString += "<p class='grad-city'>";
+      gradPanelString += graduate.city.replace(/Greater|Area|City/g,'').trim();
       if (graduate.city && graduate.city !== graduate.state_or_country) {
-        contentString += ", " + graduate.state_or_country
+        gradPanelString += ", " + graduate.state_or_country
       }
-      contentString += "</p>";
+      gradPanelString += "</p>";
     }
 
     if (graduate.company !== "company unknown") {
-      contentString += "<p class='grad-company'>";
-      contentString += graduate.company;
-      contentString += "</p>";
+      gradPanelString += "<p class='grad-company'>";
+      gradPanelString += graduate.company;
+      gradPanelString += "</p>";
     }
 
-    contentString += "</div></div>";
+    gradPanelString += "</div></div>";
 
     var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
     var marker = new google.maps.Marker({
@@ -65,11 +67,11 @@ var populateGraduates = function(graduates) {
       map: window.map
     })
     var infoWindow = new google.maps.InfoWindow({
-        content: contentString,
+        content: infoWindowString,
         maxWidth: 500
     })
 
-    $("#grad-container").append("<div class='grad-panel-wrapper'>" + contentString + "</div>");
+    $("#grad-container").append("<div class='grad-panel-wrapper'>" + gradPanelString + "</div>");
     var $gradPanel = $("#grad-container").children().last()
 
     if (graduate.lat !== "unknown") {
@@ -91,7 +93,7 @@ var populateGraduates = function(graduates) {
       infoWindow.open(window.map, marker);
     });
     google.maps.event.addListener(marker, 'mouseout', function() {
-      window.setTimeout(function() { infoWindow.close() }, 3000)
+      infoWindow.close()
     });
     google.maps.event.addListener(marker, 'click', function() {
       $("#grad-container").scrollTop(0)
@@ -133,7 +135,7 @@ var populateMarkers = function(filter, input) {
     populateGraduates(response);
   }).done(function() {
     markerCluster = new MarkerClusterer(map, markersArray);
-    markerCluster.setMaxZoom(12)
+    markerCluster.setMaxZoom(13)
   })
 }
 
