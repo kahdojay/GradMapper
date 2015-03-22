@@ -182,12 +182,21 @@ var initializeSearch = function() {
     }
   })
 
+  $(window).keyup(function(event){ checkForEmptySearch() });
+
   $('.typeahead').bind('typeahead:selected', function(obj, datum, name) {
     var input = $(event.target).parent()[0].innerText
     $("#grad-container").empty();
     clearMarkers();
     populateMarkers(searchFilter, input);
   });
+
+  var checkForEmptySearch = function() {
+    if ($(".tt-input").val() === "") {
+      clearMarkers();
+      populateMarkers()
+    }
+  }
 }
 
 $(document).ready(function(){
