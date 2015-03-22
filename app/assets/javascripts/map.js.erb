@@ -45,13 +45,11 @@ var populateGraduates = function(graduates) {
     if (graduate.city && graduate.city !== "city unknown") {
       contentString += "<p class='grad-city'>";
       contentString += graduate.city.replace(/Greater|Area|City/g,'').trim();
+      if (graduate.city && graduate.city !== graduate.state_or_country) {
+        contentString += ", " + graduate.state_or_country
+      }
       contentString += "</p>";
     }
-
-    // TODO: make state show as appropriate
-    // if (graduate.city && graduate.city !== graduate.state_or_country) {
-    //   contentString
-    // }
 
     if (graduate.company !== "company unknown") {
       contentString += "<p class='grad-company'>";
