@@ -2,7 +2,7 @@ class Graduate < ActiveRecord::Base
   belongs_to :cohort, foreign_key: "dbc_id"
   after_create :check_valid_li
 
-  def self.offset_by_city(city)
+  def self.offset_grads_by_city(city)
     Graduate.where(city: city).each do |graduate|
       graduate.update(lat: graduate.lat.to_f + rand(-0.012..0.012), long: graduate.long.to_f + rand(-0.012..0.012))
     end
@@ -12,9 +12,9 @@ class Graduate < ActiveRecord::Base
     Graduate.where(valid_linked_in?: true).each do |graduate|
       graduate.get_li_details(graduate.linked_in)
 
-    dense_cities = ["Greater New York City Area", "New York City", "San Francisco", "San Francisco Bay Area", "Greater Chicago Area", "Chicago"]
-    dense_cities.each { |city| Graduate.offset_by_city(city) }
     end
+    dense_cities = ["Greater New York City Area", "New York City", "San Francisco", "San Francisco Bay Area", "Greater Chicago Area", "Chicago"]
+    dense_cities.each { |city| Graduate.offset_grads_by_city(city) }
   end
 
   def self.rescrape_locations
