@@ -265,7 +265,7 @@ input[type=search] {
 .custom-dropdown select {
   font-size: inherit;
   padding: .13em;
-  padding-right: 1em;
+  padding-right: 2em;
   border: 0;
   margin: 0;
   border: 1px solid #B1B1B1;
