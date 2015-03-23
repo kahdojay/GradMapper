@@ -48,5 +48,8 @@ class Graduate < ActiveRecord::Base
     if search && search[0]
       update(lat: search[0].latitude, long: search[0].longitude, display: true)
     end
+    if profile.current_companies[0]
+      update(company: profile.current_companies[0][:company])
+    end
   end
 end
