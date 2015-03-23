@@ -8,12 +8,17 @@ class Graduate < ActiveRecord::Base
     end
   end
 
-  def self.scrape_li
-    Graduate.where(valid_linked_in?: true).each do |graduate|
-      graduate.get_li_details(graduate.linked_in)
-
+  def self.offset_all_grads
+    Graduate.where.not(lat:"unknown").each do |graduate|
+      graduate.update(lat: graduate.lat.to_f + rand(-0.012..0.012), long: graduate.long.to_f + rand(-0.012..0.012))
     end
-    dense_cities = ["Greater New York City Area", "New York City", "San Francisco", "San Francisco Bay Area", "Greater Chicago Area", "Chicago"]
+  end
+
+  def self.scrape_li
+    Graduate.where(valid_linked_in?: true, lat: "unknown").each do |graduate|
+      graduate.get_li_details(graduate.linked_in)
+    end
+    dense_cities = ["Greater New York City Area", "New York City", "San Francisco", "San Francisco Bay Area", "Greater Chicago Area", "Chicago", "Boston"]
     dense_cities.each { |city| Graduate.offset_grads_by_city(city) }
   end
 
