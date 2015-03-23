@@ -6,11 +6,21 @@ var initializeMap = function() {
   window.infoBoxes = [];
   window.markerCluster = null;
   var startLatlng = new google.maps.LatLng(38.0984323,-93.6047106);
+  var styleArray = [
+    {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
   var mapOptions = {
     zoom: 4,
     minZoom: 2,
     center: startLatlng,
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    styles: styleArray
   };
   window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
@@ -61,9 +71,21 @@ var populateGraduates = function(graduates) {
     gradPanelString += "</div></div>";
 
     var latitude_longitude = new google.maps.LatLng((parseFloat(graduate.lat)), (parseFloat(graduate.long)))
+    var createImage = function(url){
+      var image = {
+        url: url,
+        size: new google.maps.Size(32, 32),
+        origin: new google.maps.Point(0,0),
+        anchor: new google.maps.Point(0, 32)
+      };
+      return image;
+    }
+    var regularMarker = createImage("http://maps.gstatic.com/mapfiles/markers/marker.png")
+    var hoverMarker = createImage("http://maps.gstatic.com/mapfiles/markers/marker_yellow.png")
     var marker = new google.maps.Marker({
       position: latitude_longitude,
-      map: window.map
+      map: window.map,
+      icon: regularMarker
     })
     var infoWindow = new google.maps.InfoWindow({
         content: infoWindowString,
@@ -86,13 +108,15 @@ var populateGraduates = function(graduates) {
     markersArray.push(marker);
     infoBoxes.push(infoWindow);
     google.maps.event.addListener(marker, 'mouseover', function() {
+      marker.setIcon(hoverMarker);
       infoBoxes.forEach(function(infoBox) {
         infoBox.close();
       })
       infoWindow.open(window.map, marker);
     });
     google.maps.event.addListener(marker, 'mouseout', function() {
-      infoWindow.close()
+      infoWindow.close();
+      marker.setIcon(regularMarker);
     });
     google.maps.event.addListener(marker, 'click', function() {
       $("#grad-container").scrollTop(0)
@@ -140,7 +164,7 @@ var populateMarkers = function(filter, input) {
     populateGraduates(response);
   }).done(function() {
     markerCluster = new MarkerClusterer(map, markersArray);
-    markerCluster.setMaxZoom(13)
+    markerCluster.setMaxZoom(10)
   })
 }
 
@@ -174,9 +198,10 @@ var initializeSearch = function() {
 
   setTypeAhead(nameArray)
 
+  var $searchFilter = "name"
 
   $("#ddrp1").on("change", function() {
-    var $searchFilter = $("#ddrp1").val()
+    $searchFilter = $("#ddrp1").val()
     if ($searchFilter === "name") {
       setTypeAhead(nameArray)
     }
@@ -198,7 +223,7 @@ var initializeSearch = function() {
 }
 
 var initializeTitleButton = function() {
-  $(".btn-title").on("click", function() {
+  $(".reset-btn").on("click", function() {
     resetMap();
   })
 }
