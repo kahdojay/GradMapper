@@ -8,7 +8,7 @@ var initializeMap = function() {
   var startLatlng = new google.maps.LatLng(38.0984323,-93.6047106);
   var mapOptions = {
     zoom: 4,
-    minZoom: 3,
+    minZoom: 2,
     center: startLatlng,
     disableDefaultUI: true
   };
@@ -109,8 +109,10 @@ var setAllMap = function(map) {
   }
 }
 
-var clearMarkers = function() {
-  markerCluster.clearMarkers();
+var clearClusterMarkers = function() {
+  if (markerCluster) {
+    markerCluster.clearMarkers();
+  }
   setAllMap(null);
   markersArray = [];
 }
@@ -126,6 +128,10 @@ var populateMarkers = function(filter, input) {
     searchInputs.data = {
       filter: filter.replace(/^\s+|\s+$/g, ''),
       input: input.replace(/^\s+|\s+$/g, '')
+    }
+  } else if (filter) {
+    searchInputs.data = {
+      filter: filter.replace(/^\s+|\s+$/g, ''),
     }
   }
 
@@ -168,35 +174,27 @@ var initializeSearch = function() {
 
   setTypeAhead(nameArray)
 
-  var searchFilter = "name"
 
   $("#ddrp1").on("change", function() {
-    searchFilter = $(this).find(':selected').val();
-    if (searchFilter === "name") {
+    var $searchFilter = $("#ddrp1").val()
+    if ($searchFilter === "name") {
       setTypeAhead(nameArray)
     }
-    else if (searchFilter === "company") {
+    else if ($searchFilter === "company") {
       setTypeAhead(companyArray)
     }
-    else if (searchFilter === "cohort") {
+    else if ($searchFilter === "cohort") {
       setTypeAhead(cohortArray)
     }
   })
 
-  $(window).keyup(function(event){ checkForEmptySearch() });
 
   $('.typeahead').bind('typeahead:selected', function(obj, datum, name) {
     var input = $(event.target).parent()[0].innerText
     $("#grad-container").empty();
-    clearMarkers();
-    populateMarkers(searchFilter, input);
+    clearClusterMarkers();
+    populateMarkers($searchFilter, input);
   });
-
-  var checkForEmptySearch = function() {
-    if ($(".tt-input").val() === "") {
-      resetMap();
-    }
-  }
 }
 
 var initializeTitleButton = function() {
@@ -205,11 +203,11 @@ var initializeTitleButton = function() {
   })
 }
 
-var resetMap = function() {
-  clearMarkers();
+var resetMap = function($searchFilter) {
+  clearClusterMarkers();
   $(".twitter-typeahead").find("input").val("")
   initializeMap();
-  populateMarkers();
+  populateMarkers($searchFilter);
 }
 
 $(document).ready(function(){
