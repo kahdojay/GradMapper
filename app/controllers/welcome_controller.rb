@@ -8,6 +8,8 @@ class WelcomeController < ApplicationController
       case params["filter"]
       when "name"
         @graduates = Graduate.where(name: input, display: true).order("name")
+      when "city"
+        @graduates = Graduate.where(city: input, display: true).order("name")
       when "company"
         @graduates = Graduate.where(company: input, display: true).order("name")
       when "cohort"
