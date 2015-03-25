@@ -221,7 +221,7 @@ var initializeSearch = function() {
 
 
   $('.typeahead').bind('typeahead:selected', function() {
-    var input = $(event.target).parent()[0].innerText
+    var input = $(".tt-cursor").text()
     $("#grad-container").empty();
     clearClusterMarkers();
     populateMarkers($searchFilter, input, false);
