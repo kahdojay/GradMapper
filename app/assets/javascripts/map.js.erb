@@ -16,7 +16,7 @@ var initializeMap = function() {
     }
   ];
   var mapOptions = {
-    zoom: 4,
+    zoom: 3,
     minZoom: 2,
     center: startLatlng,
     disableDefaultUI: true,
@@ -102,7 +102,7 @@ var populateGraduates = function(graduates) {
         })
         infoWindow.open(window.map, marker);
         map.panTo(marker.getPosition());
-        map.setZoom(15);
+        map.setZoom(10);
       })
     }
     markersArray.push(marker);
