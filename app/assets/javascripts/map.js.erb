@@ -241,9 +241,14 @@ var resetMap = function($searchFilter) {
   populateMarkers($searchFilter, '', true);
 }
 
+
 $(document).ready(function(){
   initializeMap();
   populateMarkers('', '', true);
   initializeSearch();
   initializeTitleButton();
+})
+$(document).on({
+  ajaxStart: function() { $("body").addClass("loading"); },
+  ajaxStop: function() { $("body").removeClass("loading"); }
 })
