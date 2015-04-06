@@ -389,6 +389,7 @@ input[type=search] {
 }
 
 footer {
+  font-size: 1rem;
   margin: .5rem;
   clear: both;
   text-align: center;
