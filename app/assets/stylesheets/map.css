@@ -137,6 +137,7 @@ header {
   width: 40%;
   height: 65vh;
   margin: .5rem;
+  margin-top: 1rem;
   margin-left: 2.75%;
   background-color: #B1B1B1;
 }
@@ -159,6 +160,7 @@ header {
 }
 
 #grad-container {
+  margin-top: .5rem;
   overflow: scroll;
   max-height: 85%;
 }
